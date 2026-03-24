@@ -1,0 +1,100 @@
+---
+title: "Lecture 1a: Linear Congruential Generator"
+subtitle: "Simulations in Statistics (52001)"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+---
+
+## Overview
+
+A **Linear Congruential Generator (LCG)** produces a sequence of pseudo-random integers via the recursion:
+
+$$X_{n+1} = (a \cdot X_n + b) \pmod{m}$$
+
+where:
+
+- $X_0$ is the **seed** (initial value)
+- $a$ is the **multiplier**
+- $b$ is the **increment**
+- $m$ is the **modulus**
+
+The uniform pseudo-random variable at step $n$ is:
+
+$$U_n = \frac{X_n + 1}{m + 1}$$
+
+The $+1$ shift maps $X_n \in \{0, \ldots, m-1\}$ onto $(0, 1)$, avoiding the degenerate endpoints.
+
+## R Implementation
+
+```{r lcg-function}
+Part1a <- function(n, a, b, m, seed) {
+  x_current <- seed
+
+  for (step_index in seq_len(n)) {
+    x_current <- (a * x_current + b) %% m
+  }
+
+  u_n <- (x_current + 1) / (m + 1)
+  return(u_n)
+}
+```
+
+## Parameters
+
+```{r parameters}
+n_steps    <- 79
+multiplier <- 19
+increment  <- 15
+modulus    <- 64
+seed_value <- 17
+
+cat("Parameters:\n")
+cat("  n    =", n_steps,    "\n")
+cat("  a    =", multiplier, "\n")
+cat("  b    =", increment,  "\n")
+cat("  m    =", modulus,    "\n")
+cat("  seed =", seed_value, "\n")
+```
+
+## Computing $U_n$
+
+```{r compute-u-n}
+u_n <- Part1a(n = n_steps, a = multiplier, b = increment, m = modulus, seed = seed_value)
+cat("U_n =", u_n, "\n")
+```
+
+## Closed-Form Derivation
+
+Rather than iterating $n$ times, the closed-form formula jumps directly to $X_n$:
+
+$$X_n = \left( a^n X_0 + b \cdot \frac{a^n - 1}{a - 1} \right) \pmod{m}$$
+
+which simplifies to:
+
+$$X_n = \left( \left(\frac{b}{a-1} + X_0\right) \cdot a^n - \frac{b}{a-1} \right) \pmod{m}$$
+
+```{r closed-form}
+coefficient <- as.integer(increment / (multiplier - 1) + seed_value)
+offset      <- as.integer(increment / (multiplier - 1))
+
+a_pow_n_mod_m <- as.integer(Reduce(
+  function(acc, .x) (acc * multiplier) %% modulus,
+  seq_len(n_steps),
+  init = 1
+))
+
+x_n       <- (coefficient * a_pow_n_mod_m - offset) %% modulus
+u_n_exact <- (x_n + 1) / (modulus + 1)
+
+cat("a^n mod m =", a_pow_n_mod_m, "\n")
+cat("X_n       =", x_n,           "\n")
+cat("U_n       =", u_n_exact,     "\n")
+```
+
+## Final Answer
+
+$$U_n = \frac{X_n + 1}{m + 1}$$
