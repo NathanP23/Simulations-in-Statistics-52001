@@ -4,6 +4,35 @@ Content of the course [**"Simulations in Statistics (52001)"**](https://shnaton.
 
 Taught by Prof. Benjamin Yakir.
 
+<table>
+  <tr>
+    <td align="center" width="25%">
+      <a href="1.%20Random%20number%20generation/">
+        <img src="1.%20Random%20number%20generation/RNG.jpg" width="100%" alt="Random Number Generation" />
+      </a>
+      <br><b>1. Random Number Generation</b>
+    </td>
+    <td align="center" width="25%">
+      <a href="2.%20Simulating%20statistical%20models/">
+        <img src="2.%20Simulating%20statistical%20models/SimulateModel.png" width="100%" alt="Simulating Statistical Models" />
+      </a>
+      <br><b>2. Simulating Statistical Models</b>
+    </td>
+    <td align="center" width="25%">
+      <a href="3.%20Monte%20Carlo%20methods/">
+        <img src="3.%20Monte%20Carlo%20methods/MonteCarlo.jpg" width="100%" alt="Monte Carlo Methods" />
+      </a>
+      <br><b>3. Monte Carlo Methods</b>
+    </td>
+    <td align="center" width="25%">
+      <a href="4.%20Markov%20Chain%20Monte%20Carlo%20methods/">
+        <img src="4.%20Markov%20Chain%20Monte%20Carlo%20methods/MCMC.png" width="100%" alt="MCMC" />
+      </a>
+      <br><b>4. MCMC</b>
+    </td>
+  </tr>
+</table>
+
 ## Running R Code in Jupyter Notebooks (.ipynb)
 
 All lecture notebooks in this repo use **R as the kernel** inside `.ipynb` files. This setup requires a one-time installation of Jupyter and the R kernel (`IRkernel`).
